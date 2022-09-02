@@ -1,24 +1,26 @@
+import time
 import turtle
+import snake
 
 screen = turtle.Screen()
 screen.setup(width=600, height=600)
-screen.bgcolor(0,0,0)
+screen.bgcolor(0, 0, 0)
 screen.title("Snake game")
+screen.tracer(0)
 
-starting_pos = [(0, 0,), (-20, 0,), (-40, 0)]
-snake = []
-for pos in starting_pos:
-    segment_new = turtle.Turtle("square")
-    segment_new.color("white")
-    segment_new.penup()
-    segment_new.goto(pos)
-    snake.append(segment_new)
+snake_in_game = snake.Snake()
 
 is_snake_alive = True
 
-while is_snake_alive:
-    for seg in snake:
-        seg.forward(20)
+screen.listen()
+screen.onkey(snake_in_game.up, "Up")
+screen.onkey(snake_in_game.down, "Down")
+screen.onkey(snake_in_game.left, "Left")
+screen.onkey(snake_in_game.right, "Right")
 
+while is_snake_alive:
+    screen.update()
+    time.sleep(0.1)
+    snake_in_game.move()
 
 screen.exitonclick()
