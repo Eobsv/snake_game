@@ -7,6 +7,7 @@ DOWN = 270
 LEFT = 180
 RIGHT = 0
 
+
 class Snake:
     def __init__(self):
         self.segments = []
@@ -20,6 +21,24 @@ class Snake:
             segment_new.penup()
             segment_new.goto(pos)
             self.segments.append(segment_new)
+
+    def snake_ate_food(self):
+        new_segment = turtle.Turtle()
+        new_segment.shape("square")
+        new_segment.penup()
+        new_segment.showturtle()
+        new_x = self.segments[-1].xcor()
+        new_y = self.segments[-1].ycor()
+        new_segment.goto(new_x, new_y)
+        self.segments.append(new_segment)
+        new_segment.color("white")
+
+        # segment_risen = turtle.Turtle(shape="square", visible=False)
+        # print(segment_risen.isvisible())
+        # segment_risen.penup()
+        # segment_risen.showturtle()
+        # segment_risen.color("white")
+        # self.segments.append(segment_risen)
 
     def move(self):
         for seg_num in range(len(self.segments) - 1, 0, -1):
