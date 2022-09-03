@@ -33,7 +33,7 @@ while is_snake_alive:
             while new_food:
                 food.refresh()
                 for segment in snake.segments:
-                    if food.distance((segment)) >= 15:
+                    if food.distance(segment) >= 15:
                         new_food = False
                         break
         scoreboard.increase_score()
