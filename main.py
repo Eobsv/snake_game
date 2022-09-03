@@ -28,7 +28,14 @@ while is_snake_alive:
 
     # Detect collision with food.
     if snake.head.distance(food) < 15:
-        food.refresh() # TODO Make a food spawning outside of snake
+        if snake.head.distance(food) < 15:
+            new_food = True
+            while new_food:
+                food.refresh()
+                for segment in snake.segments:
+                    if food.distance((segment)) >= 15:
+                        new_food = False
+                        break
         scoreboard.increase_score()
         snake.extend()
 
