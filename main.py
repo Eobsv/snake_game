@@ -2,6 +2,7 @@ import time
 from turtle import Screen
 import snake
 import food
+from scoreboard import Scoreboard
 
 screen = Screen()
 screen.setup(width=600, height=600)
@@ -9,23 +10,39 @@ screen.bgcolor(0, 0, 0)
 screen.title("Snake game")
 screen.tracer(0)
 
-snake_in_game = snake.Snake()
+snake = snake.Snake()
 food = food.Food()
-is_snake_alive = True
+scoreboard = Scoreboard()
 
 screen.listen()
-screen.onkey(snake_in_game.up, "Up")
-screen.onkey(snake_in_game.down, "Down")
-screen.onkey(snake_in_game.left, "Left")
-screen.onkey(snake_in_game.right, "Right")
+screen.onkeypress(snake.up, "Up")
+screen.onkeypress(snake.down, "Down")
+screen.onkeypress(snake.left, "Left")
+screen.onkeypress(snake.right, "Right")
 
+is_snake_alive = True
 while is_snake_alive:
     screen.update()
     time.sleep(0.1)
+    snake.move()
 
-    snake_in_game.move()
-    if snake_in_game.head.distance(food) < 15:
-        food.refresh()
-        snake_in_game.snake_ate_food()
+    # Detect collision with food.
+    if snake.head.distance(food) < 15:
+        food.refresh() # TODO Make a food spawning outside of snake
+        scoreboard.increase_score()
+        snake.extend()
+
+    # Detect collision with wall.
+    if snake.head.xcor() > 280 or snake.head.xcor() <-280 or snake.head.ycor() > 280 or snake.head.ycor() < -280:
+        is_snake_alive = False
+        scoreboard.game_over()
+
+     #Detect collision with tail
+    snake_body = snake.segments[1:]
+    for body in snake_body:
+        if snake.head.distance(body) < 10:
+            is_snake_alive = False
+            scoreboard.game_over()
+
 
 screen.exitonclick()

@@ -22,16 +22,17 @@ class Snake:
             segment_new.goto(pos)
             self.segments.append(segment_new)
 
-    def snake_ate_food(self):
+    def snake_ate_food(self, position):
         new_segment = turtle.Turtle()
         new_segment.shape("square")
-        new_segment.penup()
-        new_segment.showturtle()
-        new_x = self.segments[-1].xcor()
-        new_y = self.segments[-1].ycor()
-        new_segment.goto(new_x, new_y)
-        self.segments.append(new_segment)
         new_segment.color("white")
+        new_segment.penup()
+        new_segment.goto(position)
+        self.segments.append(new_segment)
+
+    def extend(self):
+        self.snake_ate_food(self.segments[-1].position())
+
 
         # segment_risen = turtle.Turtle(shape="square", visible=False)
         # print(segment_risen.isvisible())
