@@ -4,6 +4,23 @@ import snake
 import food
 from scoreboard import Scoreboard
 
+""" Reading a file
+with open(score.txt) as file: #this is a method to manage the file automatically - THING automated.
+    contents = file.read()
+    print(contents)
+    
+scorestore = open(score.txt)
+contents = scorestore.read()
+print(contents)
+scorestore.close() #it's important to close to free up the resources
+"""
+""" Writing a file
+with open(score.txt, mode="a") as file: #modes r = read w = write a = append
+    file.write("New text.")
+    file.write("\nNew text.")
+    
+If there is no file in such a name we can create file with the open("name for file", mode = "w").
+"""
 screen = Screen()
 screen.setup(width=600, height=600)
 screen.bgcolor(0, 0, 0)
@@ -41,15 +58,15 @@ while is_snake_alive:
 
     # Detect collision with wall.
     if snake.head.xcor() > 280 or snake.head.xcor() <-280 or snake.head.ycor() > 280 or snake.head.ycor() < -280:
-        is_snake_alive = False
-        scoreboard.game_over()
+        scoreboard.reset_scoreboard()
+        snake.reset()
 
      #Detect collision with tail
     snake_body = snake.segments[1:]
     for body in snake_body:
         if snake.head.distance(body) < 10:
-            is_snake_alive = False
-            scoreboard.game_over()
+            scoreboard.reset_scoreboard()
+            snake.reset()
 
 
-screen.exitonclick()
+#screen.exitonclick()
